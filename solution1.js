@@ -14,7 +14,7 @@ function bind() {
     }
 }
 
-Function.prototype.myBind = bind;
+Function.prototype.bind = bind;
 
 var o = {
     x: 1,
@@ -27,3 +27,5 @@ var f2 = bind(o.foo, {x:2}, 1);
 var f3 = bind(bind(o.foo, {x:2}), {}, 1);
 console.log(f1(5) === f2(5));
 console.log(f1(5) === f3(5));
+
+
