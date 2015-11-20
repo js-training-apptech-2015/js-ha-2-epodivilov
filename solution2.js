@@ -8,7 +8,11 @@ function bind() {
     }
 }
 
-Function.prototype.bind = bind;
+function rebind(func, context) {
+    var newFn = bind(func.__origFn__ || func, context);
+    newFn.__origFn__ = func.__origFn__ || func;
+    return newFn;
+}
 
 var o = {
     x: 1,
@@ -17,9 +21,8 @@ var o = {
     }
 };
 
-var f1 = o.foo.bind({x:2}, 1);
-var f2 = bind(o.foo, {x:2}, 1);
-var f3 = bind(bind(o.foo, {x:2}), {}, 1);
+var f1 = rebind(o.foo, {x:2});
+var f2 = rebind(f1, {x:3});
 
-console.log(f1(5) === f2(5));
-console.log(f1(5) === f3(5));
+console.log(f1(1,1) === 4);
+console.log(f2(1,1) === 5);
